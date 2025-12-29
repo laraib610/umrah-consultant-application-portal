@@ -1,0 +1,8 @@
+{
+  "name": "Umrah Consultant Application Portal",
+  "description": "A professional landing page and multi-step application portal for the Umrah Consultant program, featuring a multi-stage onboarding process and a lead management dashboard.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ]
+}
