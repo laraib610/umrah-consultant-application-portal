@@ -17,7 +17,7 @@ const FAQItem: React.FC<FAQItemProps> = ({ question, answer, index }) => {
     <div className="mb-4 bg-white rounded-md  overflow-hidden border border-slate-100">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full px-6 py-5 flex items-center rounded-md justify-between text-left border-2 border-transparent boder-l-1 hover:border-l-3 hover:border-slate-900 transition-colors"
+        className="w-full px-6 py-5 flex items-center rounded-md justify-between text-left border-2 border-transparent border-l-1 hover:border-l-2 hover:border-slate-900 transition-colors"
       >
         <span className="font-bold text-slate-800 flex gap-4">
           <span className="text-slate-400">{index}.</span> {question}
@@ -87,14 +87,14 @@ const LandingPage: React.FC<LandingPageProps> = ({ onApply }) => {
   return (
     <div className="flex flex-col bg-white">
       {/* Top Section Container */}
-      <div className="flex flex-col min-h-[700px]" style={{ backgroundImage: "url('/assets/images/Frame-3.png')", backgroundRepeat: 'no-repeat', backgroundSize: 'contain' }}>
+      <div className="flex flex-col min-h-[800px]" style={{ backgroundImage: "url('/assets/images/Frame-3.png')", backgroundRepeat: 'no-repeat', backgroundSize: 'contain' }}>
 
         {/* Left Sidebar (Desktop) / Top Bar (Mobile) */}
         <div className="flex ">
           <div className="w-[30%]  flex flex-col items-center py-8 flex-shrink-0 z-20">
             <div className="relative z-10 flex flex-col items-center gap-2 mb-auto px-4 text-center">
               <div className="rounded-lg flex items-center justify-center">
-                <img src="/assets/images/logo-light.png" alt="Logo" className="w-20 h-20" />
+                <img src="/assets/images/logo-light.png" alt="Logo" className="w-24 h-24" />
               </div>
             </div>
           </div>
@@ -102,16 +102,16 @@ const LandingPage: React.FC<LandingPageProps> = ({ onApply }) => {
             {/* Mobile Logic: Logo could go here if sidebar is hidden, but keeping it simple for now */}
             <button
               onClick={onApply}
-              className="bg-[#24B3BA] hover:bg-[#0d9488] text-white font-bold py-2 px-8 rounded  transition-colors ml-auto"
+              className="bg-[#24B3BA] hover:bg-[#0d9488] text-white text-2xl font-bold py-2 px-8 rounded  transition-colors ml-auto"
             >
-              Register as a Consultant
+              Join Us
             </button>
           </div>
         </div>
 
 
         {/* Right Content Area */}
-        <div className="flex-1 h-[700px] w-full flex flex-col bg-transparent overflow-hidden">
+        <div className="flex-1 h-[800px] w-full flex flex-col bg-transparent overflow-hidden">
 
           {/* Top Navigation */}
 
@@ -121,21 +121,21 @@ const LandingPage: React.FC<LandingPageProps> = ({ onApply }) => {
             <img
               src="assets/images/umrah-consultant.png"
               alt="Hero Background"
-              className="absolute  w-full h-full object-cover opacity-75"
+              className="absolute  w-full h-full object-cover opacity-60"
             />
             <div className="absolute  bg-gradient-to-r from-[#0f172a] via-[#0f172a]/80 to-transparent"></div> {/* Darker gradient for text contrast */}
 
-            <div className="relative z-10 h-full flex flex-col justify-center px-8 lg:px-20 py-20 max-w-4xl">
-              <h1 className="text-5xl lg:text-7xl font-extrabold text-white leading-tight mb-8 ">
+            <div className="relative z-10 h-full flex flex-col justify-center px-8 lg:px-20 py-20 max-w-5xl">
+              <h1 className="text-5xl lg:text-8xl font-extrabold text-white leading-tight mb-8 ">
                 Join <span className="text-[#24B3BA]">Saudi Based</span><br />
-                MultiNational <span className="text-[#24B3BA]">Umrah</span><br />
+                MultiNational <span className="text-[#24B3BA]">Umrah</span>
                 <span className="text-[#24B3BA]">Consultant</span> Network
               </h1>
 
               <div>
                 <button
                   onClick={onApply}
-                  className="bg-[#1E3A6C] hover:bg-[#334155] border border-[#24B3BA] text-white font-bold text-lg px-10 py-4 rounded transition-all  hover:shadow-[#24B3BA]/20"
+                  className="bg-[#1E3A6D] hover:bg-slate-800 border-0 text-white font-bold text-xl px-10 py-4 rounded transition-all  hover:shadow-[#24B3BA]/20"
                 >
                   Register as a Consultant
                 </button>
@@ -149,10 +149,10 @@ const LandingPage: React.FC<LandingPageProps> = ({ onApply }) => {
       <section className="py-32 " style={{ backgroundImage: "url('/assets/images/image2.png')", backgroundRepeat: 'no-repeat', backgroundSize: 'cover' }}>
         <div className="container mx-auto px-6 text-center w-11/12">
           <h2 className="text-3xl md:text-4xl font-bold mb-4 text-[#1E3A6D]">Choose Rewarding Career</h2>
-          <p className="text-slate-600 mb-12 max-w-xl mx-auto">Get started on your path to success with our structured program.</p>
+          <p className="text-slate-600 mb-12 max-w-xl text-lg mx-auto">Get started on your path to success with our structured program.</p>
           <div className="grid md:grid-cols-2 gap-8">
             <div className="bg-white p-8 rounded-xl border border-slate-200  hover:shadow-lg transition-shadow text-left">
-              <div className="mb-6 h-48 bg-slate-200 rounded-lg overflow-hidden">
+              <div className="mb-6 h-64 bg-slate-200 rounded-lg overflow-hidden">
                 <img src="assets/images/umrah-consultant-1.jpg" className="w-full h-full object-cover" alt="Consultant" />
               </div>
               <h3 className="text-xl font-bold mb-2 text-[#1E3A6D]">Start Your Journey as a Certified Consultant</h3>
@@ -160,7 +160,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onApply }) => {
               <button className="text-cyan-600 font-bold border-b-2 border-cyan-600 pb-1 hover:text-cyan-700 transition-colors">Watch Now</button>
             </div>
             <div className="bg-white p-8 rounded-xl border border-slate-200  hover:shadow-lg transition-shadow text-left">
-              <div className="mb-6 h-48 bg-slate-200 rounded-lg overflow-hidden">
+              <div className="mb-6 h-64 bg-slate-200 rounded-lg overflow-hidden">
                 <img src="assets/images/Umrah-Consultant-22.jpg" className="w-full h-full object-cover" alt="Consultant" />
               </div>
               <h3 className="text-xl font-bold mb-2 text-[#1E3A6D]">Become a Professional Umrah Consultant</h3>
@@ -256,7 +256,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onApply }) => {
 
             </div>
 
-            <div className="flex gap-4 py-4 justify-between">
+            <div className="flex gap-4 pt-8 justify-between">
               <button
                 onClick={prev}
                 disabled={activeStep === 0}
@@ -308,7 +308,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onApply }) => {
           <div className="text-center mb-16">
             <span className="text-cyan-600 font-bold uppercase text-sm tracking-widest">Our News</span>
 
-            <h2 className="text-3xl md:text-4xl font-bold text-[#0A2540]">Read Our Latest News Blogs</h2>
+            <h2 className="text-3xl md:text-4xl font-extrabold text-[#1E3A6D]">Read Our Latest News Blogs</h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 h-auto md:h-[600px]">
             {/* Main Feature */}
@@ -352,7 +352,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onApply }) => {
           <div className="flex justify-center mt-12">
             <button
               onClick={onApply}
-              className="bg-[#1E3A6C] hover:bg-[#334155]  text-white font-bold text-lg px-10 py-4 rounded transition-all  hover:shadow-[#24B3BA]/20"
+              className="bg-[#1E3A6D] hover:bg-slate-800  text-white font-bold text-lg px-10 py-4 rounded transition-all  hover:shadow-[#24B3BA]/20"
             >
               Read More
             </button>
@@ -364,11 +364,11 @@ const LandingPage: React.FC<LandingPageProps> = ({ onApply }) => {
       <section className="py-20 bg-slate-50">
         <div className="container w-11/12 mx-auto px-6">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-[#0A2540]">Now Accepting Applications</h2>
+            <h2 className="text-3xl md:text-4xl font-extrabold text-[#1E3A6D]">Now Accepting Applications</h2>
           </div>
           <div className="bg-white rounded-2xl overflow-hidden p-8 md:p-12 flex flex-col lg:flex-row gap-12 border border-slate-100">
             <div className="lg:w-1/2">
-              <h3 className="text-2xl font-bold text-[#0A2540] mb-8">Qualification Requirements</h3>
+              <h3 className="text-2xl font-extrabold text-[#1E3A6D] mb-8">Qualification Requirements</h3>
               <ul className="space-y-6 mb-12">
                 {[
                   "Must have performed Umrah at least once",
@@ -377,7 +377,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onApply }) => {
                   "Entrepreneurial mindset with a community-serving spirit"
                 ].map((req, i) => (
                   <li key={i} className="flex items-center gap-4">
-                    <div className="w-6 h-6 bg-[#0A2540] rounded-full flex items-center justify-center flex-shrink-0">
+                    <div className="w-6 h-6 bg-[#1E3A6D] rounded-full flex items-center justify-center flex-shrink-0">
                       <i className="fa-solid fa-check text-white text-[10px]"></i>
                     </div>
                     <span className="text-slate-700 font-medium">{req}</span>
@@ -385,16 +385,16 @@ const LandingPage: React.FC<LandingPageProps> = ({ onApply }) => {
                 ))}
               </ul>
               <div className="flex flex-wrap gap-4">
-                <div className="flex items-center gap-2 bg-indigo-50 px-4 py-2 rounded-lg border border-indigo-100 text-[#0A2540] font-bold text-sm">
-                  <i className="fa-regular fa-calendar-days text-indigo-500"></i>
+                <div className="flex items-center gap-2 bg-slate-50 px-4 py-2 rounded-lg border border-slate-100 text-[#1E3A6D] font-bold text-sm">
+                  <i className="fa-regular fa-calendar-days text-cyan-500"></i>
                   30th May
                 </div>
-                <div className="flex items-center gap-2 bg-indigo-50 px-4 py-2 rounded-lg border border-indigo-100 text-[#0A2540] font-bold text-sm">
-                  <i className="fa-regular fa-clock text-indigo-500"></i>
+                <div className="flex items-center gap-2 bg-slate-50 px-4 py-2 rounded-lg border border-slate-100 text-[#1E3A6D] font-bold text-sm">
+                  <i className="fa-regular fa-clock text-cyan-500"></i>
                   Limited Seats
                 </div>
-                <div className="flex items-center gap-2 bg-indigo-50 px-4 py-2 rounded-lg border border-indigo-100 text-[#0A2540] font-bold text-sm">
-                  <i className="fa-solid fa-location-dot text-indigo-500"></i>
+                <div className="flex items-center gap-2 bg-slate-50 px-4 py-2 rounded-lg border border-slate-100 text-[#1E3A6D] font-bold text-sm">
+                  <i className="fa-solid fa-location-dot text-cyan-500"></i>
                   Selected Regions
                 </div>
               </div>
@@ -435,9 +435,9 @@ const LandingPage: React.FC<LandingPageProps> = ({ onApply }) => {
       <section className="py-20 bg-slate-50">
         <div className="container mx-auto px-6 w-11/12">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-[#0A2540]">Frequently Asked Questions</h2>
+            <h2 className="text-3xl md:text-4xl font-extrabold text-[#1E3A6D]">Frequently Asked Questions</h2>
           </div>
-          <div className="space-y-2">
+          <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4 items-start">
             {[
               { q: "What benefits will I get by working with Umrah Consultant?", a: "You get access to a Saudi-based multinational network, competitive commissions, comprehensive training, and the opportunity to serve pilgrims with high standards of professionalism." },
               { q: "What is the process after I register as a consultant?", a: "Once registered, your application undergoes review. If selected, you'll enter the training phase, followed by certification and official onboarding into our support systems." },
@@ -478,14 +478,11 @@ const LandingPage: React.FC<LandingPageProps> = ({ onApply }) => {
       </section>
 
       {/* Footer */}
-      <footer className="bg-[#1E3A6D] py-12 text-white border-t border-white/10">
+      <footer className="bg-[#1E3A6D] py-6 text-white border-t border-white/10">
         <div className="container mx-auto px-6">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-8 mb-12">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-8 ">
             <div className="flex items-center gap-2">
-              <div className="w-10 h-10 bg-cyan-500 rounded-full flex items-center justify-center">
-                <i className="fa-solid fa-kaaba text-white text-xl"></i>
-              </div>
-              <span className="font-bold text-xl tracking-tight uppercase">Umrah Companions</span>
+              <span className="font-normal text-sm tracking-tight uppercase">© 2025 Umrah Consultant. All Rights Reserved. Serving pilgrims with trust and care.</span>
             </div>
             <div className="flex gap-6">
               <a href="#" className="hover:text-cyan-400 transition-colors text-xl"><i className="fa-brands fa-facebook"></i></a>
@@ -493,9 +490,6 @@ const LandingPage: React.FC<LandingPageProps> = ({ onApply }) => {
               <a href="#" className="hover:text-cyan-400 transition-colors text-xl"><i className="fa-brands fa-linkedin"></i></a>
               <a href="#" className="hover:text-cyan-400 transition-colors text-xl"><i className="fa-brands fa-x-twitter"></i></a>
             </div>
-          </div>
-          <div className="text-center text-[#1E3A6D] text-sm">
-            &copy; 2025 Umrah Companions. All rights reserved.
           </div>
         </div>
       </footer>

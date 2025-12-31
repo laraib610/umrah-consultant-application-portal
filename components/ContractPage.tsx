@@ -53,7 +53,7 @@ const ContractPage: React.FC<ContractPageProps> = ({ userData, setAppData }) => 
 
                 {step === 'video' && (
                     <div className="p-8 md:p-12 text-center">
-                        <h2 className="text-3xl font-bold text-[#0A2540] mb-4">Welcome to the Team, {userData.name}!</h2>
+                        <h2 className="text-3xl font-extrabold text-[#1E3A6D] mb-4">Welcome to the Team, {userData.name}!</h2>
                         <p className="text-slate-500 mb-8 text-lg">Before we sign the contract, please watch this short orientation video.</p>
 
                         <div className="aspect-video bg-slate-900 rounded-xl mb-8 flex items-center justify-center relative group cursor-pointer overflow-hidden">
@@ -77,7 +77,7 @@ const ContractPage: React.FC<ContractPageProps> = ({ userData, setAppData }) => 
 
                 {step === 'contract' && (
                     <div className="p-8 md:p-12">
-                        <h2 className="text-3xl font-bold text-[#0A2540] mb-2">Final Step: Consultant Agreement</h2>
+                        <h2 className="text-3xl font-extrabold text-[#1E3A6D] mb-2">Final Step: Consultant Agreement</h2>
                         <p className="text-slate-500 mb-8">Please download the agreement, sign it, and upload the scanned copy.</p>
 
                         <div className="space-y-6">
@@ -110,7 +110,7 @@ const ContractPage: React.FC<ContractPageProps> = ({ userData, setAppData }) => 
                                         className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
                                     />
                                     <i className="fa-solid fa-cloud-arrow-up text-5xl text-cyan-300 group-hover:text-cyan-500 mb-4 transition-colors"></i>
-                                    <h3 className="text-xl font-bold text-[#0A2540] mb-2">Upload Signed Agreement</h3>
+                                    <h3 className="text-xl font-extrabold text-[#1E3A6D] mb-2">Upload Signed Agreement</h3>
                                     <p className="text-slate-500 text-sm">Drag & drop or click to browse</p>
                                 </div>
                             )}

@@ -14,7 +14,7 @@ export const authService = {
             ...data,
             id,
             password,
-            status: 'step1_complete'
+            status: 'active'
         };
 
         users.push(newUser);

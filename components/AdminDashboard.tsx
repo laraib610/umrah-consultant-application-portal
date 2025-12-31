@@ -38,7 +38,7 @@ const AdminDashboard: React.FC = () => {
         <div className="min-h-screen bg-slate-50 p-8">
             <div className="max-w-4xl mx-auto">
                 <div className="flex justify-between items-center mb-8">
-                    <h1 className="text-3xl font-bold text-[#0A2540]">Admin Dashboard</h1>
+                    <h1 className="text-3xl font-extrabold text-[#1E3A6D]">Admin Dashboard</h1>
                     <button onClick={() => navigate('/')} className="text-slate-500 hover:text-slate-800">
                         Logout
                     </button>
@@ -61,7 +61,7 @@ const AdminDashboard: React.FC = () => {
                                 <div key={user.id} className="p-6 flex flex-col md:flex-row gap-6 items-start md:items-center">
                                     <div className="flex-1">
                                         <div className="flex items-center gap-3 mb-1">
-                                            <h3 className="font-bold text-lg text-[#0A2540]">{user.name}</h3>
+                                            <h3 className="font-extrabold text-lg text-[#1E3A6D]">{user.name}</h3>
                                             <span className="bg-amber-100 text-amber-700 text-xs px-2 py-0.5 rounded-full font-bold">Pending Review</span>
                                         </div>
                                         <div className="flex flex-wrap gap-4 text-sm text-slate-500 mb-4">

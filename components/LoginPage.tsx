@@ -43,7 +43,7 @@ const LoginPage: React.FC<LoginPageProps> = ({ setAppData }) => {
             <div className="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md">
                 <div className="text-center mb-8">
                     <img className="w-20 h-20 mx-auto mb-4" src="assets/images/footerlogo.png" alt="Logo" />
-                    <h2 className="text-2xl font-bold text-[#0A2540]">Resume Application</h2>
+                    <h2 className="text-2xl font-extrabold text-[#1E3A6D]">Resume Application</h2>
                     <p className="text-slate-500">Enter user credentials sent to your email</p>
                 </div>
 
