@@ -1,10 +1,18 @@
 
 export interface Lead {
   id: string;
+  quotationNumber: string;
   name: string;
   email: string;
   phone: string;
+  flight: string;
+  visa: string;
+  transport: string;
+  hotel: string;
   status: 'New' | 'Contacted' | 'Closed' | 'In Progress';
+  paymentStatus: string;
+  quotationStatus: string;
+  packageStatus: string;
   date: string;
 }
 

@@ -5,6 +5,7 @@ import Sidebar from './Sidebar';
 import DashboardHome from './dashboard/DashboardHome';
 import ProfileBuilder from './dashboard/ProfileBuilder';
 import NewLead from './dashboard/NewLead';
+import LeadsList from './dashboard/LeadsList';
 
 interface DashboardProps {
   userData: ApplicationData;
@@ -14,26 +15,41 @@ interface DashboardProps {
 const Dashboard: React.FC<DashboardProps> = ({ userData, onLogout }) => {
   const [activeTab, setActiveTab] = useState('dashboard');
   const [leads, setLeads] = useState<Lead[]>([
-    { id: '1', name: 'Ahmad Khan', email: 'ahmad@example.com', phone: '+966 50 123 4567', status: 'New', date: '2023-10-24' },
-    { id: '2', name: 'Sarah Wilson', email: 'sarah.w@example.com', phone: '+1 415 555 0123', status: 'In Progress', date: '2023-10-22' },
-    { id: '3', name: 'Omar Bakri', email: 'omar@test.com', phone: '+44 7700 900077', status: 'Contacted', date: '2023-10-20' },
+    {
+      id: '1',
+      quotationNumber: 'QT-8421',
+      name: 'Ahmad Khan',
+      email: 'ahmad@example.com',
+      phone: '+966 50 123 4567',
+      flight: 'PIA (Karachi → Jeddah)',
+      visa: 'Umrah Visa (4 Applicants)',
+      transport: 'GMC (Airport Transfer)',
+      hotel: 'Swissôtel Makkah (5 Nights)',
+      status: 'New',
+      paymentStatus: 'Pending',
+      quotationStatus: 'Sent',
+      packageStatus: 'Premium',
+      date: '24/10/2023'
+    },
+    {
+      id: '2',
+      quotationNumber: 'QT-3215',
+      name: 'Sarah Wilson',
+      email: 'sarah.w@example.com',
+      phone: '+1 415 555 0123',
+      flight: 'Air Blue (Lahore → Madinah)',
+      visa: 'Tourist Visa (2 Applicants)',
+      transport: 'Hiace (Group Travel)',
+      hotel: 'Fairmont Makkah (7 Nights)',
+      status: 'In Progress',
+      paymentStatus: 'Paid',
+      quotationStatus: 'Approved',
+      packageStatus: 'Standard',
+      date: '22/10/2023'
+    },
   ]);
 
-  const [isFormOpen, setIsFormOpen] = useState(false);
-  const [newLead, setNewLead] = useState({ name: '', email: '', phone: '' });
-
-  const handleAddLead = (e: React.FormEvent) => {
-    e.preventDefault();
-    const lead: Lead = {
-      id: Math.random().toString(36).substr(2, 9),
-      ...newLead,
-      status: 'New',
-      date: new Date().toISOString().split('T')[0]
-    };
-    setLeads([lead, ...leads]);
-    setNewLead({ name: '', email: '', phone: '' });
-    setIsFormOpen(false);
-  };
+  const [isCreatingLead, setIsCreatingLead] = useState(false);
 
   const getHeaderInfo = () => {
     switch (activeTab) {
@@ -48,7 +64,7 @@ const Dashboard: React.FC<DashboardProps> = ({ userData, onLogout }) => {
       case 'profile':
         return { title: 'Settings', sub: 'Manage your profile, bank details, and account preferences.' };
       case 'leads':
-        return { title: 'New Quotation', sub: 'Generate a new lead and quotation for your client.' };
+        return { title: 'Leads', sub: 'Manage leads and quotations for your client.' };
       default:
         return { title: 'Dashboard', sub: 'Welcome back.' };
     }
@@ -61,7 +77,20 @@ const Dashboard: React.FC<DashboardProps> = ({ userData, onLogout }) => {
       case 'profile':
         return <ProfileBuilder />;
       case 'leads':
-        return <NewLead />;
+        return isCreatingLead ? (
+          <NewLead
+            onCreateLead={(lead) => {
+              setLeads([lead, ...leads]);
+              setIsCreatingLead(false);
+            }}
+            onCancel={() => setIsCreatingLead(false)}
+          />
+        ) : (
+          <LeadsList
+            leads={leads}
+            onAddNewLead={() => setIsCreatingLead(true)}
+          />
+        );
       case 'packages':
       case 'customers':
       case 'reports':
@@ -102,72 +131,23 @@ const Dashboard: React.FC<DashboardProps> = ({ userData, onLogout }) => {
                 {headerInfo.sub}
               </p>
             </div>
-            <button
-              onClick={() => setActiveTab('leads')}
-              className="bg-[#1E3A6D] hover:bg-slate-800 text-white font-bold py-3 px-6 rounded-lg shadow-lg flex items-center gap-2 transition-all"
-            >
-              <i className="fa-solid fa-plus text-xs"></i> Generate New Lead
-            </button>
+            {activeTab !== 'leads' && (
+              <button
+                onClick={() => {
+                  setActiveTab('leads');
+                  setIsCreatingLead(true);
+                }}
+                className="bg-[#1E3A6D] hover:bg-slate-800 text-white font-bold py-3 px-6 rounded-lg shadow-lg flex items-center gap-2 transition-all"
+              >
+                <i className="fa-solid fa-plus text-xs"></i> Generate New Lead
+              </button>
+            )}
           </div>
 
           {renderContent()}
         </div>
       </main>
 
-      {/* New Lead Form Modal */}
-      {isFormOpen && (
-        <div className="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm">
-          <div className="bg-white w-full max-w-md rounded-2xl shadow-2xl p-8 animate-[slideIn_0.3s_ease-out]">
-            <div className="flex justify-between items-center mb-6">
-              <h2 className="text-2xl font-extrabold text-[#1E3A6D]">Generate Lead</h2>
-              <button onClick={() => setIsFormOpen(false)} className="text-slate-400 hover:text-slate-600">
-                <i className="fa-solid fa-times"></i>
-              </button>
-            </div>
-            <form onSubmit={handleAddLead} className="space-y-4">
-              <div>
-                <label className="block text-[11px] font-extrabold text-slate-400 uppercase tracking-wider mb-2">Lead Name</label>
-                <input
-                  type="text"
-                  required
-                  value={newLead.name}
-                  onChange={(e) => setNewLead({ ...newLead, name: e.target.value })}
-                  className="w-full px-4 py-3 bg-slate-50 border border-slate-100 rounded-xl focus:ring-2 focus:ring-cyan-500 outline-none font-medium text-[#1E3A6D]"
-                  placeholder="Potential Client Name"
-                />
-              </div>
-              <div>
-                <label className="block text-[11px] font-extrabold text-slate-400 uppercase tracking-wider mb-2">Email Address</label>
-                <input
-                  type="email"
-                  required
-                  value={newLead.email}
-                  onChange={(e) => setNewLead({ ...newLead, email: e.target.value })}
-                  className="w-full px-4 py-3 bg-slate-50 border border-slate-100 rounded-xl focus:ring-2 focus:ring-cyan-500 outline-none font-medium text-[#1E3A6D]"
-                  placeholder="client@example.com"
-                />
-              </div>
-              <div>
-                <label className="block text-[11px] font-extrabold text-slate-400 uppercase tracking-wider mb-2">Phone Number</label>
-                <input
-                  type="tel"
-                  required
-                  value={newLead.phone}
-                  onChange={(e) => setNewLead({ ...newLead, phone: e.target.value })}
-                  className="w-full px-4 py-3 bg-slate-50 border border-slate-100 rounded-xl focus:ring-2 focus:ring-cyan-500 outline-none font-medium text-[#1E3A6D]"
-                  placeholder="+1..."
-                />
-              </div>
-              <button
-                type="submit"
-                className="w-full bg-[#1E3A6D] text-white py-4 rounded-lg font-bold hover:bg-slate-800 transition-all shadow-lg mt-4"
-              >
-                Create Lead
-              </button>
-            </form>
-          </div>
-        </div>
-      )}
       <style>{`
         @keyframes slideIn { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
       `}</style>
