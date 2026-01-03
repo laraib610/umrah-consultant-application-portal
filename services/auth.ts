@@ -44,22 +44,5 @@ export const authService = {
     getUser: (email: string): User | null => {
         const users: User[] = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
         return users.find(u => u.email === email) || null;
-    },
-
-    getPendingUsers: (): User[] => {
-        const users: User[] = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
-        return users.filter(u => u.status === 'pending_approval');
-    },
-
-    activateUser: (email: string): User | null => {
-        const users: User[] = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
-        const index = users.findIndex(u => u.email === email);
-
-        if (index !== -1) {
-            users[index].status = 'active';
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(users));
-            return users[index];
-        }
-        return null;
     }
 };

@@ -14,6 +14,22 @@ export interface Lead {
   quotationStatus: string;
   packageStatus: string;
   date: string;
+  voucherCode?: string;
+  timerExpiry?: number; // timestamp
+  voucherStatus?: 'Pending' | 'Accepted' | 'Rejected';
+  rejectionReason?: string;
+  rejectionComment?: string;
+  paymentProofUrl?: string;
+  totalAmount?: number;
+  priceBreakdown?: {
+    service: string;
+    amount: number;
+  }[];
+  pilgrims?: {
+    name: string;
+    passportNumber: string;
+    type: 'Adult' | 'Child' | 'Infant';
+  }[];
 }
 
 export interface ApplicationData {

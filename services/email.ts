@@ -73,7 +73,7 @@ export const sendVideoUploadedEmail = async (data: ApplicationData, videoLink: s
         Video Link: ${videoLink}
         
         This user is now PENDING APPROVAL.
-        Please review the video in the Admin Dashboard and Activate the user.
+        Please review and activate the user in the CRM.
     `;
 
     return sendEmail({
@@ -81,8 +81,7 @@ export const sendVideoUploadedEmail = async (data: ApplicationData, videoLink: s
         to_email: ADMIN_EMAIL,
         subject: `ACTION REQUIRED: Video Uploaded by ${data.name}`,
         message: message,
-        admin_email: ADMIN_EMAIL,
-        action_link: `${window.location.origin}/admin`
+        admin_email: ADMIN_EMAIL
     });
 };
 

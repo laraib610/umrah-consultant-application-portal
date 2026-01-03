@@ -2,7 +2,6 @@ import React from 'react';
 import FAQs from './FAQs';
 import Notifications from './Notifications';
 import TermsConditions from './TermsConditions';
-import Support from './Support';
 import BankInfo from './BankInfo';
 
 const ProfileBuilder: React.FC = () => {
@@ -58,11 +57,6 @@ const ProfileBuilder: React.FC = () => {
             {/* Notifications Section */}
             <div className="h-fit">
                 <Notifications />
-            </div>
-
-            {/* Support Section */}
-            <div className="h-fit">
-                <Support />
             </div>
 
             {/* FAQs Section */}

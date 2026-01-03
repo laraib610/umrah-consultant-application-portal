@@ -1,12 +1,45 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Lead } from '../../types';
+
+const CountdownTimer: React.FC<{ expiryTime: number }> = ({ expiryTime }) => {
+    const [timeLeft, setTimeLeft] = useState<number>(expiryTime - Date.now());
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            const remaining = expiryTime - Date.now();
+            setTimeLeft(remaining);
+            if (remaining <= 0) clearInterval(interval);
+        }, 1000);
+        return () => clearInterval(interval);
+    }, [expiryTime]);
+
+    if (timeLeft <= 0) {
+        return <span className="text-rose-500 font-bold text-[10px] uppercase">Expired</span>;
+    }
+
+    const hours = Math.floor(timeLeft / (1000 * 60 * 60));
+    const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+    return (
+        <div className="flex items-center gap-1.5 text-[#1E3A6D] font-black tabular-nums">
+            <i className="fa-solid fa-clock-rotate-left text-[10px] text-cyan-500 animate-pulse"></i>
+            <span className="text-xs">
+                {hours > 0 && `${hours}h `}{minutes}m {seconds}s
+            </span>
+        </div>
+    );
+};
 
 interface LeadsListProps {
     leads: Lead[];
     onAddNewLead: () => void;
+    onViewLead: (id: string) => void;
+    onManageVoucher: (id: string) => void;
+    onDeleteLead: (id: string) => void;
 }
 
-const LeadsList: React.FC<LeadsListProps> = ({ leads, onAddNewLead }) => {
+const LeadsList: React.FC<LeadsListProps> = ({ leads, onAddNewLead, onViewLead, onManageVoucher, onDeleteLead }) => {
     const getStatusColor = (status: string) => {
         switch (status.toLowerCase()) {
             case 'new': return 'bg-emerald-50 text-emerald-600 border-emerald-100';
@@ -47,6 +80,8 @@ const LeadsList: React.FC<LeadsListProps> = ({ leads, onAddNewLead }) => {
                             <th className="px-6 py-4 text-[11px] font-extrabold text-slate-400 uppercase tracking-widest text-center">Service Details</th>
                             <th className="px-6 py-4 text-[11px] font-extrabold text-slate-400 uppercase tracking-widest">Quotation Status</th>
                             <th className="px-6 py-4 text-[11px] font-extrabold text-slate-400 uppercase tracking-widest">Payment</th>
+                            <th className="px-6 py-4 text-[11px] font-extrabold text-slate-400 uppercase tracking-widest">Voucher</th>
+                            <th className="px-6 py-4 text-[11px] font-extrabold text-slate-400 uppercase tracking-widest">Timer</th>
                             <th className="px-6 py-4 text-[11px] font-extrabold text-slate-400 uppercase tracking-widest text-right">Actions</th>
                         </tr>
                     </thead>
@@ -96,15 +131,46 @@ const LeadsList: React.FC<LeadsListProps> = ({ leads, onAddNewLead }) => {
                                         {lead.paymentStatus}
                                     </span>
                                 </td>
+                                <td className="px-6 py-5 cursor-pointer hover:opacity-80 transition-all" onClick={() => onManageVoucher(lead.id)}>
+                                    {lead.voucherCode ? (
+                                        <div className="flex flex-col">
+                                            <span className="bg-emerald-50 text-emerald-600 border border-emerald-100 px-3 py-1 rounded-lg text-[11px] font-black tracking-wider w-fit">
+                                                {lead.voucherCode}
+                                            </span>
+                                            {lead.voucherStatus && (
+                                                <span className={`text-[9px] font-bold mt-1 ${lead.voucherStatus === 'Accepted' ? 'text-emerald-500' :
+                                                        lead.voucherStatus === 'Rejected' ? 'text-rose-500' : 'text-amber-500'
+                                                    }`}>
+                                                    {lead.voucherStatus}
+                                                </span>
+                                            )}
+                                        </div>
+                                    ) : (
+                                        <span className="text-slate-300 font-bold text-[10px] uppercase tracking-widest">No Voucher</span>
+                                    )}
+                                </td>
+                                <td className="px-6 py-5">
+                                    {lead.timerExpiry ? (
+                                        <CountdownTimer expiryTime={lead.timerExpiry} />
+                                    ) : (
+                                        <span className="text-slate-300 font-bold text-[10px] uppercase tracking-widest">-</span>
+                                    )}
+                                </td>
                                 <td className="px-6 py-5 text-right">
                                     <div className="flex items-center justify-end gap-2">
-                                        <button className="w-9 h-9 rounded-lg bg-slate-50 flex items-center justify-center text-slate-400 hover:bg-[#1E3A6D] hover:text-white transition-all">
+                                        <button
+                                            onClick={() => onViewLead(lead.id)}
+                                            className="w-9 h-9 rounded-lg bg-slate-50 flex items-center justify-center text-slate-400 hover:bg-[#1E3A6D] hover:text-white transition-all"
+                                        >
                                             <i className="fa-solid fa-eye text-xs"></i>
                                         </button>
                                         <button className="w-9 h-9 rounded-lg bg-slate-50 flex items-center justify-center text-slate-400 hover:bg-cyan-500 hover:text-white transition-all">
                                             <i className="fa-solid fa-download text-xs"></i>
                                         </button>
-                                        <button className="w-9 h-9 rounded-lg bg-slate-50 flex items-center justify-center text-slate-400 hover:bg-red-50 hover:text-red-500 transition-all">
+                                        <button
+                                            onClick={() => onDeleteLead(lead.id)}
+                                            className="w-9 h-9 rounded-lg bg-slate-50 flex items-center justify-center text-slate-400 hover:bg-red-50 hover:text-red-500 transition-all"
+                                        >
                                             <i className="fa-solid fa-trash-can text-xs"></i>
                                         </button>
                                     </div>

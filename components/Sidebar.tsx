@@ -13,6 +13,7 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, onTabChange, onLogout }) =
         { id: 'packages', label: 'Packages', icon: 'fa-box-archive' },
         { id: 'customers', label: 'Customers', icon: 'fa-users' },
         { id: 'reports', label: 'Reports', icon: 'fa-chart-simple' },
+        { id: 'support', label: 'Support', icon: 'fa-headset' },
         { id: 'profile', label: 'Settings', icon: 'fa-gear' },
     ];
 

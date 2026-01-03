@@ -7,7 +7,6 @@ import { ApplicationData } from './types';
 import LoginPage from './components/LoginPage';
 
 import ContractPage from './components/ContractPage';
-import AdminDashboard from './components/AdminDashboard';
 
 const AppContent: React.FC = () => {
   const navigate = useNavigate();
@@ -51,10 +50,6 @@ const AppContent: React.FC = () => {
       <Route
         path="/contract"
         element={<ContractPage userData={appData} setAppData={setAppData} />}
-      />
-      <Route
-        path="/admin"
-        element={<AdminDashboard />}
       />
       <Route
         path="/dashboard"

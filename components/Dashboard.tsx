@@ -6,6 +6,10 @@ import DashboardHome from './dashboard/DashboardHome';
 import ProfileBuilder from './dashboard/ProfileBuilder';
 import NewLead from './dashboard/NewLead';
 import LeadsList from './dashboard/LeadsList';
+import LeadDetail from './dashboard/LeadDetail';
+import VoucherAction from './dashboard/VoucherAction';
+import Support from './dashboard/Support';
+import { leadsService } from '../services/leads';
 
 interface DashboardProps {
   userData: ApplicationData;
@@ -14,41 +18,9 @@ interface DashboardProps {
 
 const Dashboard: React.FC<DashboardProps> = ({ userData, onLogout }) => {
   const [activeTab, setActiveTab] = useState('dashboard');
-  const [leads, setLeads] = useState<Lead[]>([
-    {
-      id: '1',
-      quotationNumber: 'QT-8421',
-      name: 'Ahmad Khan',
-      email: 'ahmad@example.com',
-      phone: '+966 50 123 4567',
-      flight: 'PIA (Karachi → Jeddah)',
-      visa: 'Umrah Visa (4 Applicants)',
-      transport: 'GMC (Airport Transfer)',
-      hotel: 'Swissôtel Makkah (5 Nights)',
-      status: 'New',
-      paymentStatus: 'Pending',
-      quotationStatus: 'Sent',
-      packageStatus: 'Premium',
-      date: '24/10/2023'
-    },
-    {
-      id: '2',
-      quotationNumber: 'QT-3215',
-      name: 'Sarah Wilson',
-      email: 'sarah.w@example.com',
-      phone: '+1 415 555 0123',
-      flight: 'Air Blue (Lahore → Madinah)',
-      visa: 'Tourist Visa (2 Applicants)',
-      transport: 'Hiace (Group Travel)',
-      hotel: 'Fairmont Makkah (7 Nights)',
-      status: 'In Progress',
-      paymentStatus: 'Paid',
-      quotationStatus: 'Approved',
-      packageStatus: 'Standard',
-      date: '22/10/2023'
-    },
-  ]);
-
+  const [leads, setLeads] = useState<Lead[]>(() => leadsService.getAllLeads());
+  const [selectedLeadId, setSelectedLeadId] = useState<string | null>(null);
+  const [isManagingVoucher, setIsManagingVoucher] = useState(false);
   const [isCreatingLead, setIsCreatingLead] = useState(false);
 
   const getHeaderInfo = () => {
@@ -63,8 +35,10 @@ const Dashboard: React.FC<DashboardProps> = ({ userData, onLogout }) => {
         return { title: 'Reports', sub: 'Download and analyze your performance reports.' };
       case 'profile':
         return { title: 'Settings', sub: 'Manage your profile, bank details, and account preferences.' };
+      case 'support':
+        return { title: 'Support & Help', sub: 'Need assistance? Our support team is here for you.' };
       case 'leads':
-        return { title: 'Leads', sub: 'Manage leads and quotations for your client.' };
+        return { title: 'Leads Managment', sub: 'Manage and track your customer leads and quotations.' };
       default:
         return { title: 'Dashboard', sub: 'Welcome back.' };
     }
@@ -76,19 +50,48 @@ const Dashboard: React.FC<DashboardProps> = ({ userData, onLogout }) => {
         return <DashboardHome userData={userData} leads={leads} />;
       case 'profile':
         return <ProfileBuilder />;
+      case 'support':
+        return <Support />;
       case 'leads':
-        return isCreatingLead ? (
-          <NewLead
-            onCreateLead={(lead) => {
-              setLeads([lead, ...leads]);
-              setIsCreatingLead(false);
-            }}
-            onCancel={() => setIsCreatingLead(false)}
-          />
-        ) : (
+        if (isCreatingLead) {
+          return (
+            <NewLead
+              onCreateLead={(lead) => {
+                const updatedLeads = leadsService.addLead(lead);
+                setLeads(updatedLeads);
+                setIsCreatingLead(false);
+              }}
+              onCancel={() => setIsCreatingLead(false)}
+            />
+          );
+        }
+
+        if (selectedLeadId) {
+          const lead = leads.find(l => l.id === selectedLeadId);
+          if (lead) {
+            return (
+              <LeadDetail
+                lead={lead}
+                onBack={() => setSelectedLeadId(null)}
+                onManageVoucher={() => setIsManagingVoucher(true)}
+              />
+            );
+          }
+        }
+
+        return (
           <LeadsList
             leads={leads}
             onAddNewLead={() => setIsCreatingLead(true)}
+            onViewLead={(id) => setSelectedLeadId(id)}
+            onManageVoucher={(id) => {
+              setSelectedLeadId(id);
+              setIsManagingVoucher(true);
+            }}
+            onDeleteLead={(id) => {
+              const updatedLeads = leadsService.deleteLead(id);
+              setLeads(updatedLeads);
+            }}
           />
         );
       case 'packages':
@@ -131,22 +134,22 @@ const Dashboard: React.FC<DashboardProps> = ({ userData, onLogout }) => {
                 {headerInfo.sub}
               </p>
             </div>
-            {activeTab !== 'leads' && (
-              <button
-                onClick={() => {
-                  setActiveTab('leads');
-                  setIsCreatingLead(true);
-                }}
-                className="bg-[#1E3A6D] hover:bg-slate-800 text-white font-bold py-3 px-6 rounded-lg shadow-lg flex items-center gap-2 transition-all"
-              >
-                <i className="fa-solid fa-plus text-xs"></i> Generate New Lead
-              </button>
-            )}
           </div>
 
           {renderContent()}
         </div>
       </main>
+
+      {isManagingVoucher && selectedLeadId && (
+        <VoucherAction
+          lead={leads.find(l => l.id === selectedLeadId)!}
+          onClose={() => setIsManagingVoucher(false)}
+          onUpdate={(updates) => {
+            const updatedLeads = leadsService.updateLead(selectedLeadId, updates);
+            if (updatedLeads) setLeads(leadsService.getAllLeads());
+          }}
+        />
+      )}
 
       <style>{`
         @keyframes slideIn { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
