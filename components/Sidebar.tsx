@@ -18,7 +18,7 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, onTabChange, onLogout }) =
     ];
 
     return (
-        <aside className="w-full md:w-64 bg-white border-r border-slate-100 flex flex-col h-screen sticky top-0 pb-6">
+        <aside className="w-full print:hidden md:w-64 bg-white border-r border-slate-100 flex flex-col h-screen sticky top-0 pb-6">
             <div className="p-6">
                 <div className="flex items-center gap-2 mb-8">
                     <span className="font-bold text-[#1E3A6D] text-lg tracking-tight uppercase">Umrah <span className="text-cyan-500">Companions</span></span>

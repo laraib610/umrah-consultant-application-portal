@@ -74,6 +74,14 @@ const Dashboard: React.FC<DashboardProps> = ({ userData, onLogout }) => {
                 lead={lead}
                 onBack={() => setSelectedLeadId(null)}
                 onManageVoucher={() => setIsManagingVoucher(true)}
+                onUpdateStatus={(status) => {
+                  const updatedLeads = leadsService.updateLead(lead.id, { status: status as Lead['status'] });
+                  if (updatedLeads) setLeads(leadsService.getAllLeads());
+                }}
+                onAddDocument={(doc) => {
+                  const updatedLeads = leadsService.addDocument(lead.id, doc);
+                  if (updatedLeads) setLeads(leadsService.getAllLeads());
+                }}
               />
             );
           }
@@ -127,10 +135,10 @@ const Dashboard: React.FC<DashboardProps> = ({ userData, onLogout }) => {
         <div className="max-w-7xl mx-auto relative cursor-default">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 gap-4 mt-2">
             <div>
-              <h1 className="text-3xl font-extrabold text-[#1E3A6D]">
+              <h1 className="text-3xl print:hidden font-extrabold text-[#1E3A6D]">
                 {headerInfo.title}
               </h1>
-              <p className="text-slate-500 font-medium text-sm mt-1">
+              <p className="text-slate-500 print:hidden font-medium text-sm mt-1">
                 {headerInfo.sub}
               </p>
             </div>

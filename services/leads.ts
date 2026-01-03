@@ -60,9 +60,110 @@ const MOCK_LEADS: Lead[] = [
             { service: 'Private Transport', amount: 500 }
         ],
         pilgrims: [
-            { name: 'John Doe', passportNumber: 'A1234567', type: 'Adult' },
-            { name: 'Jane Doe', passportNumber: 'B7654321', type: 'Adult' },
-            { name: 'Junior Doe', passportNumber: 'C9876543', type: 'Child' }
+            { name: 'Muhammad Talha', passportNumber: 'A1234567', type: 'Adult' },
+            { name: 'Jane Doe', passportNumber: 'B7654321', type: 'Adult' }
+        ],
+        flightDetails: [
+            {
+                pnr: '9BBBH0',
+                airline: 'PIA',
+                flightNumber: '741',
+                departureCity: 'Islamabad',
+                departureDate: '10 Jan, 2026',
+                departureTime: '01:10',
+                arrivalCity: 'Jeddah',
+                arrivalTime: '04:50',
+                passengers: 2
+            },
+            {
+                pnr: '9BBBH0',
+                airline: 'PIA',
+                flightNumber: '714',
+                departureCity: 'Madinah',
+                departureDate: '17 Jan, 2026',
+                departureTime: '00:20',
+                arrivalCity: 'Islamabad',
+                arrivalTime: '06:50',
+                passengers: 2
+            }
+        ],
+        passengerDetails: [
+            {
+                rrn: '234566',
+                description: 'Visa for 2 Persons Apply from Saudi Arabia',
+                adults: 2,
+                children: 0,
+                infants: 0,
+                additionalServices: ''
+            }
+        ],
+        transportDetails: [
+            {
+                rrn: '34667',
+                pickup: 'Jeddah Airport',
+                date: '10 Jan, 2026',
+                time: '04:50 am',
+                dropOff: 'Makkah Towers\nMakkah Hotel',
+                transportType: '1 Car'
+            },
+            {
+                rrn: '245666',
+                pickup: 'Makkah Towers\nMakkah Hotel',
+                date: '14 Jan, 2026',
+                time: '02:00 pm',
+                dropOff: 'Taiba Front Madinah Hotel\nMadinah Hotel',
+                transportType: '1 Car'
+            },
+            {
+                rrn: '2344556',
+                pickup: 'Taiba Front Madinah Hotel\nMadinah Hotel',
+                date: '17 Jan, 2026',
+                time: '07:20 pm',
+                dropOff: 'Madinah Airport',
+                transportType: '1 Car'
+            }
+        ],
+        accommodationDetails: [
+            {
+                hcn: '23860',
+                city: 'Makkah',
+                hotelName: 'Makkah Towers',
+                checkIn: '10 Jan, 2026',
+                checkOut: '14 Jan, 2026',
+                nights: 4,
+                occupancy: 'Standard Double Room',
+                qty: 1,
+                food: 'RO'
+            },
+            {
+                hcn: '34745',
+                city: 'Madinah',
+                hotelName: 'Taiba Front Madinah Hotel',
+                checkIn: '14 Jan, 2026',
+                checkOut: '17 Jan, 2026',
+                nights: 3,
+                occupancy: 'Standard Double Room',
+                qty: 1,
+                food: 'BB'
+            }
+        ],
+        documents: [
+            {
+                id: 'doc1',
+                type: 'Customer',
+                category: 'Passport',
+                name: 'passport_mtalha.pdf',
+                url: '#',
+                uploadedAt: '02/01/2026'
+            },
+            {
+                id: 'doc2',
+                type: 'Agency',
+                category: 'Visa',
+                name: 'visa_approved_mtalha.pdf',
+                url: '#',
+                uploadedAt: '03/01/2026'
+            }
         ]
     }
 ];
@@ -93,6 +194,18 @@ export const leadsService = {
         const index = leads.findIndex(l => l.id === id);
         if (index !== -1) {
             leads[index] = { ...leads[index], ...updates };
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(leads));
+            return leads[index];
+        }
+        return null;
+    },
+
+    addDocument: (leadId: string, doc: any) => {
+        const leads = leadsService.getAllLeads();
+        const index = leads.findIndex(l => l.id === leadId);
+        if (index !== -1) {
+            const currentDocs = leads[index].documents || [];
+            leads[index] = { ...leads[index], documents: [doc, ...currentDocs] };
             localStorage.setItem(STORAGE_KEY, JSON.stringify(leads));
             return leads[index];
         }
