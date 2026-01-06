@@ -61,7 +61,7 @@ const LeadDetail: React.FC<LeadDetailProps> = ({ lead, onBack, onManageVoucher, 
     return (
         <div className="space-y-6 animate-[fadeIn_0.5s_ease-out] print:space-y-0 print:animate-none">
             {/* Header Actions - hidden in print */}
-            <div className="flex flex-col gap-4 mb-5 print:hidden">
+            <div className="flex flex-col gap-2 mb-5 print:hidden">
                 <div className="flex items-center justify-between">
                     <button
                         onClick={onBack}
@@ -70,6 +70,32 @@ const LeadDetail: React.FC<LeadDetailProps> = ({ lead, onBack, onManageVoucher, 
                         <i className="fa-solid fa-arrow-left transition-transform group-hover:-translate-x-1"></i>
                         Back to Leads
                     </button>
+                    {/* Status Update Bar */}
+                    <div className="flex items-center gap-4">
+                        <div className="flex gap-2 justify-between items-center">
+                            <label htmlFor="status-select" className="block text-[10px] font-black text-slate-400 uppercase tracking-widest m-0">
+                                Status
+                            </label>
+                            <div className="relative ">
+                                <select
+                                    id="status-select"
+                                    value={lead.status}
+                                    onChange={(e) => onUpdateStatus(e.target.value)}
+                                    className="w-full appearance-none bg-white border border-slate-200 text-[#1E3A6D] font-bold text-sm rounded-xl px-4 py-2.5 pr-10 hover:border-[#1E3A6D] focus:border-[#1E3A6D] focus:ring-0 transition-colors cursor-pointer"
+                                >
+                                    {STATUS_OPTIONS.map((status) => (
+                                        <option key={status} value={status}>
+                                            {status}
+                                        </option>
+                                    ))}
+                                </select>
+                                <div className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none">
+                                    <i className="fa-solid fa-chevron-down text-xs"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <div className="flex gap-3">
                         {lead.voucherCode && (
                             <>
@@ -82,7 +108,7 @@ const LeadDetail: React.FC<LeadDetailProps> = ({ lead, onBack, onManageVoucher, 
                                 </button>
                                 <button
                                     onClick={onManageVoucher}
-                                    className="bg-[#1E3A6D] hover:bg-slate-800 text-white font-bold py-2.5 px-6 rounded-xl shadow-lg flex items-center gap-2 transition-all active:scale-95"
+                                    className="bg-[#1E3A6D] hover:bg-slate-800 text-white font-bold py-2.5 px-6 rounded-xl flex items-center gap-2 transition-all active:scale-95"
                                 >
                                     <i className="fa-solid fa-ticket"></i>
                                     Manage Quotation
@@ -92,40 +118,7 @@ const LeadDetail: React.FC<LeadDetailProps> = ({ lead, onBack, onManageVoucher, 
                     </div>
                 </div>
 
-                {/* Status Update Bar */}
-                <div className="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm flex items-center gap-4">
-                    <div className="w-10 h-10 bg-[#1E3A6D]/5 text-[#1E3A6D] rounded-xl flex items-center justify-center text-lg">
-                        <i className="fa-solid fa-list-check"></i>
-                    </div>
-                    <div className="flex-1">
-                        <label htmlFor="status-select" className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">
-                            Current Workflow Status
-                        </label>
-                        <div className="relative">
-                            <select
-                                id="status-select"
-                                value={lead.status}
-                                onChange={(e) => onUpdateStatus(e.target.value)}
-                                className="w-full appearance-none bg-slate-50 border border-slate-200 text-[#1E3A6D] font-bold text-sm rounded-xl px-4 py-2.5 pr-10 hover:border-[#1E3A6D] focus:border-[#1E3A6D] focus:ring-0 transition-colors cursor-pointer"
-                            >
-                                {STATUS_OPTIONS.map((status) => (
-                                    <option key={status} value={status}>
-                                        {status}
-                                    </option>
-                                ))}
-                            </select>
-                            <div className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none">
-                                <i className="fa-solid fa-chevron-down text-xs"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="hidden md:block">
-                        <div className="bg-[#1E3A6D]/5 px-4 py-2 rounded-xl border border-[#1E3A6D]/10">
-                            <span className="text-[10px] font-black text-[#1E3A6D]/60 uppercase tracking-widest block mb-0.5">Active Stage</span>
-                            <span className="text-xs font-bold text-[#1E3A6D]">{lead.status}</span>
-                        </div>
-                    </div>
-                </div>
+
             </div>
 
             {/* Content Grid */}

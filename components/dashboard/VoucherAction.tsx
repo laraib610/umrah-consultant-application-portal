@@ -74,7 +74,7 @@ const VoucherAction: React.FC<VoucherActionProps> = ({ lead, onClose, onUpdate }
                                 onClick={() => setAction('Accept')}
                                 className="group flex flex-col items-center gap-4 p-8 rounded-2xl border-2 border-emerald-50 bg-emerald-50/20 hover:border-emerald-500 hover:bg-emerald-50 transition-all text-center"
                             >
-                                <div className="w-16 h-16 bg-emerald-500 text-white rounded-2xl flex items-center justify-center text-2xl shadow-[0_8px_20px_-5px_rgba(16,185,129,0.4)] transition-transform group-hover:scale-110">
+                                <div className="w-16 h-16 bg-emerald-500 text-white rounded-2xl flex items-center justify-center text-2xl transition-transform group-hover:scale-110">
                                     <i className="fa-solid fa-check-circle"></i>
                                 </div>
                                 <div>
@@ -86,7 +86,7 @@ const VoucherAction: React.FC<VoucherActionProps> = ({ lead, onClose, onUpdate }
                                 onClick={() => setAction('Reject')}
                                 className="group flex flex-col items-center gap-4 p-8 rounded-2xl border-2 border-rose-50 bg-rose-50/20 hover:border-rose-500 hover:bg-rose-50 transition-all text-center"
                             >
-                                <div className="w-16 h-16 bg-rose-500 text-white rounded-2xl flex items-center justify-center text-2xl shadow-[0_8px_20px_-5px_rgba(244,63,94,0.4)] transition-transform group-hover:scale-110">
+                                <div className="w-16 h-16 bg-rose-500 text-white rounded-2xl flex items-center justify-center text-2xl transition-transform group-hover:scale-110">
                                     <i className="fa-solid fa-times-circle"></i>
                                 </div>
                                 <div>

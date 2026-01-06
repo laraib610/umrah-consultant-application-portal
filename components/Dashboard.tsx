@@ -51,7 +51,7 @@ const Dashboard: React.FC<DashboardProps> = ({ userData, onLogout }) => {
       case 'profile':
         return <ProfileBuilder />;
       case 'support':
-        return <Support />;
+        return <Support leads={leads} />;
       case 'leads':
         if (isCreatingLead) {
           return (
@@ -133,7 +133,7 @@ const Dashboard: React.FC<DashboardProps> = ({ userData, onLogout }) => {
 
       <main className="flex-1 p-6 md:p-10 overflow-y-auto bg-[#F9FBFF]">
         <div className="max-w-7xl mx-auto relative cursor-default">
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 gap-4 mt-2">
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-5 gap-4 mt-2">
             <div>
               <h1 className="text-3xl print:hidden font-extrabold text-[#1E3A6D]">
                 {headerInfo.title}

@@ -105,3 +105,57 @@ export enum AppStep {
   CONTRACT = 3,
   DASHBOARD = 4
 }
+
+export type TicketAction =
+  | 'Downgrade Service'
+  | 'Upgrade Service'
+  | 'Update Final Quotation'
+  | 'Change Flight'
+  | 'Change Hotel'
+  | 'Refund'
+  | 'General Inquiry'
+  | 'Other';
+
+export type TicketStatus = 'Open' | 'In Progress' | 'Resolved' | 'Closed';
+
+
+export interface RefundDetails {
+  quotationNumber: string;
+  amount: number;
+  services: string;
+  reason: string;
+  customerName: string;
+  proofUrl?: string; // Data URL or File Path
+}
+
+export interface SupportTicket {
+  id: string;
+  leadId: string;
+  leadName: string;
+  action: TicketAction;
+  description: string;
+  status: TicketStatus;
+  createdAt: string;
+  updatedAt: string;
+  adminResponse?: string;
+  refundDetails?: RefundDetails;
+  upgradeDowngradeDetails?: UpgradeDowngradeDetails;
+}
+
+export interface UpgradeDowngradeDetails {
+  serviceType: 'Hotel' | 'Transport' | 'Flight';
+  // Hotel specific
+  city?: string;
+  rating?: number;
+  hotelName?: string;
+  hotelQuantity?: number;
+  nights?: number;
+  roomType?: string;
+  // Transport specific
+  route?: string;
+  vehicleType?: string;
+  transportQuantity?: number;
+  // Flight specific
+  airline?: string;
+}
+
